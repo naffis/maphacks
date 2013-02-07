@@ -1,0 +1,214 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<head>
+	<title>naffis.com - DC Metro Map</title>
+
+	<script src="http://maps.google.com/maps?file=api&v=1&key=ABQIAAAAEHO3NjLpZKYpZK8fdva4SxRB20UjH4X0KKuy8aVZJeUxP7NmOBTOr84vPEK6Vnbv1qBYL7tAm87LZg" type="text/javascript"></script>
+
+	<script type="text/javascript">
+
+		var mymarkers = new Array();
+		var mylocations = new Array();
+
+		var map;
+		function update_map() {
+			var map = new GMap(document.getElementById("map"));
+			map.addControl(new GLargeMapControl());
+			map.addControl(new GMapTypeControl());
+			map.centerAndZoom(new GPoint(-77.0457, 38.8971), 7);
+
+			// red line
+			var redLine = new Array(
+					new Array("-77.164536", "39.117276", "Red Line", "Shady Grove", "15903 Somerville Dr", "Derwood, MD"),
+					new Array("-77.146683", "39.083705", "Red Line", "Rockville", "251 Hungerford Dr", "Rockville, MD"),
+					new Array("-77.122415", "39.062841", "Red Line", "Twinbrook", "1600 Chapman Avenue", "Rockville, MD"),
+					new Array("-77.110291", "39.047386", "Red Line", "White Flint", "5500 Marinelli Road", "Rockville, MD"),
+					new Array("-77.103081", "39.023318", "Red Line", "Grosvenor-Strathmore", "10300 Rockville Pike", "Bethesda, MD"),
+					new Array("-77.097158", "39.000443", "Red Line", "Medical Center", "8810 Rockville Pike", "Bethesda, MD"),
+					new Array("-77.094154", "38.984099", "Red Line", "Bethesda", "7450 Wisconsin Avenue", "Bethesda, MD"),
+					new Array("-77.084861", "38.959734", "Red Line", "Friendship Heights", "5337 Wisconsin Avenue, NW", "Washington, DC"),
+					new Array("-77.079563", "38.948129", "Red Line", "Tenleytown-AU", "4501 Wisconsin Avenue, NW", "Washington, DC"),
+					new Array("-77.063085", "38.943164", "Red Line", "Van Ness-UDC", "4200 Connecticut Avenue, NW", "Washington, DC"),
+					new Array("-77.058878", "38.936713", "Red Line", "Cleveland Park", "3599 Connecticut Avenue, NW", "Washington, DC")
+				)
+
+			// orange line
+			var orangeLine = new Array(
+					new Array("-77.084797", "38.891367", "Orange Line", "Court House", "2100 Wilson Blvd", "Arlington, VA"),
+					new Array("-77.071495", "38.896644", "Orange Line", "Rosslyn", "1850 N. Moore Street", "Arlington, VA"),
+					new Array("-77.050037", "38.900719", "Orange Line", "Foggy Bottom-GWU", "2301 I St. NW", "Washington, DC")
+				)
+
+			// blue line
+			var blueLine = new Array(
+					new Array("-77.062740", "38.884552", "Blue Line", "Arlington Cemetery", "1000 North Memorial Drive", "Arlington, VA"),
+					new Array("-77.071495", "38.896644", "Blue Line", "Rosslyn", "1850 N. Moore Street", "Arlington, VA"),
+					new Array("-77.050037", "38.900719", "Blue Line", "Foggy Bottom-GWU", "2301 I St. NW", "Washington, DC")
+				)
+
+			var redLinePoints = new Array();
+			for (var i = 0; i < redLine.length; i++) {
+				var stop = redLine[i];
+				var point = new GPoint(stop[0], stop[1]);
+				redLinePoints.push(point);
+			  	var marker = createRedMarker(point, stop[2], stop[3], stop[4], stop[5]);
+			  	map.addOverlay(marker);
+			  	map.addOverlay(new GPolyline(redLinePoints, "#ff0000", 2, 1));
+			}
+
+			var orangeLinePoints = new Array();
+			for (var i = 0; i < orangeLine.length; i++) {
+				var stop = orangeLine[i];
+				var point = new GPoint(stop[0], stop[1]);
+				orangeLinePoints.push(point);
+			  	var marker = createOrangeMarker(point, stop[2], stop[3], stop[4], stop[5]);
+			  	map.addOverlay(marker);
+			  	map.addOverlay(new GPolyline(orangeLinePoints, "#f88017", 2, 1));
+			}
+
+			var blueLinePoints = new Array();
+			for (var i = 0; i < orangeLine.length; i++) {
+				var stop = blueLine[i];
+				var point = new GPoint(stop[0], stop[1]);
+				blueLinePoints.push(point);
+			  	var marker = createBlueMarker(point, stop[2], stop[3], stop[4], stop[5]);
+			  	map.addOverlay(marker);
+			  	map.addOverlay(new GPolyline(blueLinePoints, "#2b60de", 2, 1));
+			}
+
+			function createRedMarker(point, line, name, address1, address2) {
+  				var marker = new GMarker(point, redicon);
+
+  				var html = line + "<br>" + name + "<br>" + address1 + "<br>" + address2;
+  				GEvent.addListener(marker, "click", function() {
+  				  marker.openInfoWindowHtml(html);
+  				});
+
+  				return marker;
+			}
+
+			function createOrangeMarker(point, line, name, address1, address2) {
+  				var marker = new GMarker(point, orangeicon);
+
+  				var html = line + "<br>" + name + "<br>" + address1 + "<br>" + address2;
+  				GEvent.addListener(marker, "click", function() {
+  				  marker.openInfoWindowHtml(html);
+  				});
+
+  				return marker;
+			}
+
+			function createBlueMarker(point, line, name, address1, address2) {
+  				var marker = new GMarker(point, blueicon);
+
+  				var html = line + "<br>" + name + "<br>" + address1 + "<br>" + address2;
+  				GEvent.addListener(marker, "click", function() {
+  				  marker.openInfoWindowHtml(html);
+  				});
+
+  				return marker;
+			}
+
+		}
+	</script>
+
+	<link rel="stylesheet" href="/maphacks/css/naffisstyles.css" type="text/css"></link>
+
+</head>
+
+<body>
+	<div id="espg">
+		<div id="headernaffis">
+			<table width="100%">
+				<tr>
+					<td align="left">
+						<font size="+2">
+							<a href="http://www.naffis.com/maphacks/dcmetro.html">DC Metro Map</a>
+						</font>
+					</td>
+					<td align="right">
+						<div id="smallborder">
+							<a href="http://www.canyouconnect.com">www.CanYouConnect.com</a>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+
+		<div id="content">
+
+			<table width="100%">
+				<tr valign="top">
+					<td align="left" width="800px">
+						<div id="map">
+							<div id="loading" style="margin: 10px; color: #979797">Loading Maps...</div>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<table width="100%">
+							<tr>
+								<td>
+									<div class="mapmenu">
+										<div id="maplarger">Copyright &copy; 2005 - Click on the map to see the longitude and latitude</div>
+									</div>
+								</td>
+								<td>
+									<div class="mapmenu">
+										<div id="maptoggle"></div>
+									</div>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div>
+
+		<div id="footernaffis">
+			<strong>
+			<a href="http://www.naffis.com/maphacks/dcmetro.html">Home</a>
+			</strong>
+		</div>
+	</div>
+
+	<div id="alert">&nbsp;</div>
+
+	<script type="text/javascript">
+		if(GBrowserIsCompatible()) {
+			var redicon = new GIcon();
+			redicon.image = "http://labs.google.com/ridefinder/images/mm_20_red.png";
+			redicon.shadow = "http://labs.google.com/ridefinder/images/mm_20_shadow.png";
+			redicon.iconSize = new GSize(12, 20);
+			redicon.shadowSize = new GSize(22, 20);
+			redicon.iconAnchor = new GPoint(6, 20);
+			redicon.infoWindowAnchor = new GPoint(5, 1);
+
+			var orangeicon = new GIcon();
+			orangeicon.image = "http://labs.google.com/ridefinder/images/mm_20_orange.png";
+			orangeicon.shadow = "http://labs.google.com/ridefinder/images/mm_20_shadow.png";
+			orangeicon.iconSize = new GSize(12, 20);
+			orangeicon.shadowSize = new GSize(22, 20);
+			orangeicon.iconAnchor = new GPoint(6, 20);
+			orangeicon.infoWindowAnchor = new GPoint(5, 1);
+
+			var blueicon = new GIcon();
+			blueicon.image = "http://labs.google.com/ridefinder/images/mm_20_blue.png";
+			blueicon.shadow = "http://labs.google.com/ridefinder/images/mm_20_shadow.png";
+			blueicon.iconSize = new GSize(12, 20);
+			blueicon.shadowSize = new GSize(22, 20);
+			blueicon.iconAnchor = new GPoint(6, 20);
+			blueicon.infoWindowAnchor = new GPoint(5, 1);
+
+			update_map();
+		}
+		else {
+			alert("Sorry your browser is not compatible.");
+		}
+	</script>
+
+</body>
+
+</html>

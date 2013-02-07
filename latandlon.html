@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<head>
+	<title>naffis.com - Longitude and Latitude Finder</title>
+
+	<script src="http://maps.google.com/maps?file=api&v=1&key=ABQIAAAAEHO3NjLpZKYpZK8fdva4SxRB20UjH4X0KKuy8aVZJeUxP7NmOBTOr84vPEK6Vnbv1qBYL7tAm87LZg" type="text/javascript"></script>
+
+	<script type="text/javascript">
+
+		function gid(i) {
+			return document.getElementById(i);
+		}
+
+		var mymarkers = new Array();
+		var mylocations = new Array();
+
+		var map;
+		function update_map() {
+			var map = new GMap(document.getElementById("map"));
+			map.addControl(new GLargeMapControl());
+			map.addControl(new GMapTypeControl());
+			map.centerAndZoom(new GPoint(-77.0457, 38.8971), 4);
+
+			GEvent.addListener(map, 'click', function(overlay, point) {
+			    //var center = map.getCenterLatLng();
+			    var latLngStr = '(' + point.y + ', ' + point.x + ')';
+			    map.openInfoWindow(point, document.createTextNode(latLngStr));
+			});
+		}
+	</script>
+
+	<link rel="stylesheet" href="/maphacks/css/naffisstyles.css" type="text/css"></link>
+
+</head>
+
+<body>
+	<div id="espg">
+		<div id="headernaffis">
+			<table width="100%">
+				<tr>
+					<td align="left">
+						<font size="+2">
+							<a href="http://www.naffis.com/maphacks/latandlon.html">Longitude and Latitude Finder</a>
+						</font>
+					</td>
+					<td align="right">
+						<div id="smallborder">
+							<a href="http://www.canyouconnect.com">www.CanYouConnect.com</a>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+
+		<div id="content">
+
+			<table width="100%">
+				<tr valign="top">
+					<td align="left" width="800px">
+						<div id="map">
+							<div id="loading" style="margin: 10px; color: #979797">Loading Maps...</div>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<table width="100%">
+							<tr>
+								<td>
+									<div class="mapmenu">
+										<div id="maplarger">Copyright &copy; 2005 - Click on the map to see the longitude and latitude</div>
+									</div>
+								</td>
+								<td>
+									<div class="mapmenu">
+										<div id="maptoggle"></div>
+									</div>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div>
+
+		<div id="footernaffis">
+			<strong>
+			<a href="http://www.naffis.com/maphacks/pinpoint.html">Home</a>
+			</strong>
+		</div>
+	</div>
+
+	<div id="alert">&nbsp;</div>
+
+	<script type="text/javascript">
+		if(GBrowserIsCompatible()) {
+			var baseIcon = new GIcon();
+			baseIcon.shadow = "http://www.google.com/mapfiles/shadow50.png";
+			baseIcon.iconSize = new GSize(20, 34);
+			baseIcon.shadowSize = new GSize(37, 34);
+			baseIcon.iconAnchor = new GPoint(9, 34);
+			baseIcon.infoWindowAnchor = new GPoint(9, 2);
+			baseIcon.infoShadowAnchor = new GPoint(18, 25);
+
+			update_map();
+		}
+		else {
+			alert("Sorry your browser is not compatible.");
+		}
+	</script>
+
+</body>
+
+</html>

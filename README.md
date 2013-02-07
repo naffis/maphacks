@@ -1,4 +1,4 @@
 maphacks
 ========
 
-A collection of Google Maps created around May 2005.
+A collection of Google Maps hacks created around May 2005.
